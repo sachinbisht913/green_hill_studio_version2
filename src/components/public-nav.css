@@ -1,0 +1,596 @@
+/* =========================================================
+   PUBLIC NAVBAR
+   ========================================================= */
+
+.public-nav {
+    height: 74px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 100;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 max(24px, 5vw);
+
+    /*
+     * Default navbar
+     */
+    background: rgba(248, 247, 243, 0.96);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid rgba(145, 119, 72, 0.22);
+
+    color: #28251f;
+
+    font-family: Inter, Arial, sans-serif;
+
+    box-shadow:
+        0 5px 25px rgba(30, 25, 15, 0.06);
+
+    transition:
+        background 0.35s ease,
+        backdrop-filter 0.35s ease,
+        border-color 0.35s ease,
+        color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* =========================================================
+   NAVBAR OVER HERO
+   ========================================================= */
+
+.public-nav.over-hero {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(10, 15, 10, 0.78),
+            rgba(20, 20, 15, 0.48),
+            rgba(10, 15, 10, 0.68)
+        );
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+
+    color: #fff;
+
+    box-shadow:
+        0 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.public-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    font-weight: 700;
+
+    font-size: 11px;
+
+    line-height: 1.15;
+
+    letter-spacing: 0.15em;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/*
+ * Logo container
+ */
+
+.public-brand img {
+    width: 43px;
+    height: 43px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    padding: 2px;
+
+    border: 2px solid rgba(190, 155, 91, 0.85);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.12),
+        0 5px 18px rgba(0, 0, 0, 0.28);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.public-brand:hover img {
+    transform: scale(1.06);
+
+    box-shadow:
+        0 0 0 4px rgba(190, 155, 91, 0.2),
+        0 7px 22px rgba(0, 0, 0, 0.35);
+}
+
+
+/*
+ * Logo text
+ */
+
+.public-brand span {
+    color: inherit;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.17em;
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+
+/*
+ * Slight gold accent when over hero
+ */
+
+.public-nav.over-hero .public-brand span {
+    color: #fff;
+
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+
+/* =========================================================
+   NAVIGATION LINKS
+   ========================================================= */
+
+.public-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 26px;
+}
+
+
+/*
+ * All navigation links
+ */
+
+.public-links a,
+.nav-home-button {
+    font-family: Inter, Arial, sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.13em;
+
+    position: relative;
+
+    padding: 9px 0;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease,
+        transform 0.25s ease;
+
+    color: inherit;
+
+    text-decoration: none;
+}
+
+
+/*
+ * Gold underline
+ */
+
+.public-links a:not(.nav-admin)::after,
+.nav-home-button::after {
+    content: '';
+
+    position: absolute;
+
+    bottom: 1px;
+
+    left: 0;
+
+    width: 0;
+
+    height: 2px;
+
+    background: #b99355;
+
+    border: none;
+
+    transition:
+        width 0.3s ease;
+}
+
+
+/*
+ * Hover + active
+ */
+
+.public-links a:hover::after,
+.public-links a.active::after,
+.nav-home-button:hover::after {
+    width: 100%;
+}
+
+
+.public-links a:hover,
+.nav-home-button:hover {
+    color: #b99355;
+
+    opacity: 1;
+
+    transform: translateY(-1px);
+}
+
+
+/*
+ * Active link
+ */
+
+.public-links a.active,
+.nav-home-button.active {
+    color: #b99355;
+}
+
+
+/* =========================================================
+   HERO NAV LINK VISIBILITY
+   ========================================================= */
+
+.public-nav.over-hero .public-links a,
+.public-nav.over-hero .nav-home-button {
+    color: #fff;
+
+    text-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.65);
+}
+
+
+.public-nav.over-hero .public-links a:hover,
+.public-nav.over-hero .nav-home-button:hover {
+    color: #e0b66f;
+}
+
+
+/*
+ * Stronger active state over hero
+ */
+
+.public-nav.over-hero .public-links a.active {
+    color: #e0b66f;
+}
+
+
+/* =========================================================
+   HOME BUTTON
+   ========================================================= */
+
+.nav-home-button {
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   ADMIN BUTTON
+   ========================================================= */
+
+.nav-admin {
+    padding: 9px 15px !important;
+
+    border: 1px solid #aa8752;
+
+    border-radius: 2px;
+
+    color: inherit;
+
+    background: rgba(174, 137, 75, 0.08);
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease !important;
+}
+
+
+.nav-admin:hover {
+    background: #a9844d;
+
+    border-color: #a9844d;
+
+    color: #fff !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(120, 88, 40, 0.25);
+}
+
+
+/*
+ * Remove underline from Admin
+ */
+
+.public-links a.nav-admin::after {
+    display: none;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.public-menu {
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid currentColor;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: inherit;
+
+    font-size: 21px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.public-menu:hover {
+    background: #a9844d;
+
+    color: #fff;
+
+    transform: rotate(4deg);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 880px) {
+
+    .public-nav {
+        height: 68px;
+
+        padding: 0 18px;
+    }
+
+
+    /* Logo */
+
+    .public-brand img {
+        width: 39px;
+        height: 39px;
+    }
+
+
+    .public-brand span {
+        font-size: 9px;
+
+        letter-spacing: 0.14em;
+    }
+
+
+    /* Hamburger */
+
+    .public-menu {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* Mobile navigation */
+
+    .public-links {
+        display: none;
+
+        position: absolute;
+
+        top: 76px;
+
+        right: 16px;
+
+        min-width: 230px;
+
+        padding: 12px;
+
+        background:
+            rgba(248, 247, 243, 0.98);
+
+        color: #282622;
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        box-shadow:
+            0 18px 45px rgba(25, 20, 10, 0.2);
+
+        border:
+            1px solid rgba(145, 119, 72, 0.25);
+
+        border-radius: 4px;
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+
+    .public-links.open {
+        display: flex;
+
+        animation:
+            navDrop 0.25s ease forwards;
+    }
+
+
+    .public-links a,
+    .nav-home-button {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 12px;
+
+        text-align: left;
+
+        font-size: 10px;
+    }
+
+
+    /*
+     * Remove desktop underline
+     */
+
+    .public-links a:not(.nav-admin)::after,
+    .nav-home-button::after {
+        display: none;
+    }
+
+
+    /*
+     * Mobile hover
+     */
+
+    .public-links a:hover,
+    .nav-home-button:hover {
+        background: rgba(169, 132, 77, 0.1);
+
+        color: #9a753e;
+
+        transform: none;
+    }
+
+
+    /*
+     * Admin
+     */
+
+    .nav-admin {
+        text-align: center;
+
+        margin-top: 6px;
+
+        padding: 11px !important;
+    }
+
+
+    /*
+     * When menu is open over hero,
+     * make text dark inside the menu.
+     */
+
+    .public-nav.over-hero .public-links a,
+    .public-nav.over-hero .nav-home-button {
+        color: #282622;
+
+        text-shadow: none;
+    }
+
+
+    .public-nav.over-hero .public-links a:hover,
+    .public-nav.over-hero .nav-home-button:hover {
+        color: #9a753e;
+    }
+}
+
+
+/* =========================================================
+   MENU ANIMATION
+   ========================================================= */
+
+@keyframes navDrop {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-8px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .public-nav,
+    .public-brand img,
+    .public-links a,
+    .nav-home-button,
+    .nav-admin,
+    .public-menu {
+        transition: none;
+    }
+
+    .public-links.open {
+        animation: none;
+    }
+}
