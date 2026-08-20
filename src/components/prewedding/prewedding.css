@@ -1,0 +1,690 @@
+/* =========================================================
+   PRE-WEDDING COLLECTIONS
+   Matches the Wedding Collections page style
+   ========================================================= */
+
+/* Elegant serif used throughout the collection headings */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.pre-wedding-page {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #f7f4ef;
+    color: #2c2926;
+
+    padding: 0 8.3% 100px;
+
+    font-family: 'DM Sans', sans-serif;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pre-wedding-hero {
+    padding-top: 42px;
+    padding-bottom: 78px;
+    margin-top: 50px;
+}
+
+
+/* Small gold uppercase text */
+
+.pre-wedding-eyebrow {
+    margin: 0 0 22px;
+
+    color: #9a7340;
+
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+/* Main heading */
+
+.pre-wedding-hero h1 {
+    margin: 0;
+
+    max-width: 720px;
+
+    color: #292725;
+
+    font-family: 'Cormorant Garamond', Georgia, serif;
+
+    font-size: clamp(72px, 6.2vw, 100px);
+    font-weight: 500;
+
+    line-height: 0.82;
+    letter-spacing: -3px;
+}
+
+
+/* Italic second line */
+
+.pre-wedding-hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+}
+
+
+/* Intro paragraph */
+
+.pre-wedding-intro {
+    margin: 30px 0 0;
+
+    color: #806f5d;
+
+    font-family: 'Cormorant Garamond', Georgia, serif;
+
+    font-size: 22px;
+    font-weight: 400;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   PACKAGES CONTAINER
+   ========================================================= */
+
+.pre-wedding-packages {
+    width: 100%;
+
+    border-top: 1px solid #ddd4c7;
+}
+
+
+/* =========================================================
+   INDIVIDUAL PACKAGE
+   ========================================================= */
+
+.pre-wedding-package {
+
+    position: relative;
+
+    min-height: 160px;
+
+    display: grid;
+
+    /*
+        Same horizontal structure as screenshot:
+
+        NUMBER
+        PACKAGE INFO
+        PRICE
+        ITEMS
+        LINK
+    */
+
+    grid-template-columns:
+        90px
+        minmax(330px, 1.35fr)
+        220px
+        minmax(330px, 1.25fr)
+        190px;
+
+    align-items: center;
+
+    column-gap: 0;
+
+    padding: 30px 0;
+
+    border-bottom: 1px solid #ddd4c7;
+
+    background: transparent;
+
+    transition:
+        background-color 0.3s ease;
+}
+
+
+/* =========================================================
+   PACKAGE NUMBER
+   ========================================================= */
+
+.package-number {
+
+    align-self: center;
+
+    color: #a4814f;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   PACKAGE NAME + DESCRIPTION
+   ========================================================= */
+
+.package-info {
+    padding-right: 35px;
+}
+
+
+.package-info h2 {
+
+    margin: 0 0 10px;
+
+    color: #263b4d;
+
+    font-family: 'Cormorant Garamond', Georgia, serif;
+
+    font-size: 40px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -0.7px;
+}
+
+
+.package-info p {
+
+    max-width: 230px;
+
+    margin: 0;
+
+    color: #705f4e;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+.package-price {
+
+    color: #2b2926;
+
+    font-family: 'Cormorant Garamond', Georgia, serif;
+
+    font-size: 21px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PACKAGE ITEMS
+   ========================================================= */
+
+.package-items {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding-right: 30px;
+}
+
+
+.package-items span {
+
+    display: flex;
+    align-items: center;
+
+    color: #6f6255;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.35;
+}
+
+
+.package-items b {
+
+    display: inline-block;
+
+    width: 17px;
+
+    flex-shrink: 0;
+
+    color: #a17b48;
+
+    font-size: 10px;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   EXPLORE LINK
+   ========================================================= */
+
+.package-link {
+
+    justify-self: end;
+
+    color: #171717;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.package-link span {
+
+    margin-left: 5px;
+
+    font-size: 12px;
+
+    transition: transform 0.25s ease;
+}
+
+
+.package-link:hover {
+
+    color: #9a7340;
+}
+
+
+.package-link:hover span {
+
+    display: inline-block;
+
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   FEATURED PACKAGE
+   ========================================================= */
+
+.pre-wedding-package.featured-package {
+
+    background: #eee9df;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    border-bottom-color: #ddd4c7;
+}
+
+
+/*
+   Since the featured package has internal padding,
+   compensate for the outer number position.
+*/
+
+.pre-wedding-package.featured-package .package-number {
+    padding-left: 0;
+}
+
+
+/* "MOST CHOSEN" label */
+
+.pre-wedding-package.featured-package::before {
+
+    content: "MOST CHOSEN";
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    transform: translateY(0);
+
+    padding: 7px 12px;
+
+    background: #9a7340;
+
+    color: #fff;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.pre-wedding-package:not(.featured-package):hover {
+
+    background: rgba(238, 233, 223, 0.35);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .pre-wedding-page {
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
+
+    .pre-wedding-package {
+
+        grid-template-columns:
+            70px
+            minmax(250px, 1.2fr)
+            150px
+            minmax(250px, 1fr)
+            160px;
+    }
+
+
+    .package-info h2 {
+        font-size: 35px;
+    }
+
+
+    .package-price {
+        font-size: 19px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .pre-wedding-page {
+
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+
+    .pre-wedding-hero {
+        padding-top: 35px;
+        padding-bottom: 60px;
+    }
+
+
+    .pre-wedding-hero h1 {
+
+        font-size: 72px;
+
+        line-height: 0.86;
+
+        letter-spacing: -2px;
+    }
+
+
+    .pre-wedding-package {
+
+        grid-template-columns:
+            55px
+            1fr
+            130px
+            1fr;
+
+        row-gap: 15px;
+
+        padding: 28px 0;
+    }
+
+
+    .package-items {
+
+        grid-column: 3 / 5;
+
+        grid-row: 2;
+
+        padding-left: 0;
+    }
+
+
+    .package-link {
+
+        grid-column: 4;
+
+        grid-row: 1;
+
+        justify-self: end;
+    }
+
+
+    .package-info {
+        grid-column: 2;
+    }
+
+
+    .package-price {
+        grid-column: 3;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .pre-wedding-page {
+
+        padding-left: 22px;
+        padding-right: 22px;
+        padding-bottom: 60px;
+    }
+
+
+    /* Hero */
+
+    .pre-wedding-hero {
+
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+
+
+    .pre-wedding-eyebrow {
+
+        font-size: 9px;
+
+        letter-spacing: 1.5px;
+    }
+
+
+    .pre-wedding-hero h1 {
+
+        max-width: 100%;
+
+        font-size: 58px;
+
+        line-height: 0.88;
+
+        letter-spacing: -1.5px;
+    }
+
+
+    .pre-wedding-intro {
+
+        margin-top: 24px;
+
+        font-size: 19px;
+    }
+
+
+    /* Package */
+
+    .pre-wedding-package {
+
+        display: grid;
+
+        grid-template-columns: 40px 1fr;
+
+        min-height: auto;
+
+        padding: 28px 0;
+
+        row-gap: 20px;
+    }
+
+
+    .package-number {
+
+        grid-column: 1;
+        grid-row: 1;
+
+        align-self: start;
+
+        padding-top: 5px;
+    }
+
+
+    .package-info {
+
+        grid-column: 2;
+        grid-row: 1;
+
+        padding-right: 0;
+    }
+
+
+    .package-info h2 {
+
+        font-size: 31px;
+
+        line-height: 1.05;
+
+        margin-bottom: 10px;
+    }
+
+
+    .package-info p {
+
+        max-width: 270px;
+
+        font-size: 11px;
+    }
+
+
+    .package-price {
+
+        grid-column: 2;
+        grid-row: 2;
+
+        font-size: 22px;
+    }
+
+
+    .package-items {
+
+        grid-column: 2;
+        grid-row: 3;
+
+        padding: 0;
+
+        gap: 7px;
+    }
+
+
+    .package-items span {
+
+        font-size: 11px;
+    }
+
+
+    .package-link {
+
+        grid-column: 2;
+        grid-row: 4;
+
+        justify-self: start;
+
+        font-size: 9px;
+    }
+
+
+    /* Featured */
+
+    .pre-wedding-package.featured-package {
+
+        padding: 28px 18px;
+    }
+
+
+    .pre-wedding-package.featured-package::before {
+
+        padding: 6px 9px;
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .pre-wedding-hero h1 {
+
+        font-size: 50px;
+    }
+
+
+    .package-info h2 {
+
+        font-size: 28px;
+    }
+
+
+    .pre-wedding-intro {
+
+        font-size: 18px;
+    }
+
+}

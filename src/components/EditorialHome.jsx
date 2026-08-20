@@ -8,6 +8,7 @@ import {
   fallbackGallery,
   packages,
   services,
+  preWedPackages
 } from '../data';
 
 import './editorial.css';

@@ -3,6 +3,10 @@ import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 
 import { supabase, isSupabaseConfigured } from './lib/supabase';
 
+import PreWeddingPackageDetails from "./components/prewedding/PreWeddingPackageDetails";
+import PreWedding from "./components/prewedding/PreWedding";
+
+
 import {
   categories,
   getAllGallery,
@@ -1160,6 +1164,27 @@ export default function App() {
 <Route
   path="*"
   element={<EditorialHome />}
+/>
+
+<Route
+  path="/services/pre-wedding"
+  
+  element={
+  <Layout>
+    
+    <PreWedding />
+  </Layout>
+  }
+/>
+
+<Route
+  path="/pre-wedding/:slug"
+  element={
+    <Layout>
+
+      <PreWeddingPackageDetails />
+    </Layout>
+  }
 />
     </Routes>
   );
