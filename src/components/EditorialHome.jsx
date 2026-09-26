@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { getGallery } from '../services/gallery';
 import { isSupabaseConfigured } from '../lib/supabase';
@@ -7,8 +7,7 @@ import { isSupabaseConfigured } from '../lib/supabase';
 import {
   fallbackGallery,
   packages,
-  services,
-  preWedPackages
+  services
 } from '../data';
 
 import './editorial.css';
@@ -26,6 +25,8 @@ const localPhotos = fallbackGallery.map(
 export default function EditorialHome() {
   const [photos, setPhotos] = useState(localPhotos);
   const [scrolled, setScrolled] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     /*
@@ -88,12 +89,33 @@ export default function EditorialHome() {
 
     return () => {
       observer.disconnect();
+
       window.removeEventListener(
         'scroll',
         onScroll
       );
     };
   }, []);
+
+  /*
+   * Handle clicking anywhere on a collection row
+   */
+  const handleCollectionClick = (slug) => {
+    navigate(`/packages/${slug}`);
+  };
+
+  /*
+   * Allow keyboard users to activate collection rows
+   */
+  const handleCollectionKeyDown = (event, slug) => {
+    if (
+      event.key === 'Enter' ||
+      event.key === ' '
+    ) {
+      event.preventDefault();
+      navigate(`/packages/${slug}`);
+    }
+  };
 
   return (
     <main className="editorial">
@@ -297,41 +319,33 @@ export default function EditorialHome() {
         </div>
 
         <ol>
+  {services
+    .filter(Array.isArray)
+    .slice(0, 5)
+    .map(
+      ([name, description, path], index) => (
+        <li key={name}>
+          <span>
+            0{index + 1}
+          </span>
 
-          {services
-            .slice(0, 5)
-            .map(
-              (
-                [name, description, path],
-                index
-              ) => (
-                <li key={name}>
+          <Link to={path}>
+            <strong>
+              {name}
+            </strong>
 
-                  <span>
-                    0{index + 1}
-                  </span>
+            <em>
+              {description}
+            </em>
 
-                  <Link to={path}>
-
-                    <strong>
-                      {name}
-                    </strong>
-
-                    <em>
-                      {description}
-                    </em>
-
-                    <b>
-                      ↗
-                    </b>
-
-                  </Link>
-
-                </li>
-              )
-            )}
-
-        </ol>
+            <b>
+              ↗
+            </b>
+          </Link>
+        </li>
+      )
+    )}
+</ol>
 
       </section>
 
@@ -469,6 +483,27 @@ export default function EditorialHome() {
 
               <article
                 key={p.slug}
+
+                /*
+                 * Make the entire row clickable.
+                 * This works on both desktop and mobile.
+                 */
+                onClick={() =>
+                  handleCollectionClick(p.slug)
+                }
+
+                /*
+                 * Accessibility
+                 */
+                onKeyDown={(event) =>
+                  handleCollectionKeyDown(
+                    event,
+                    p.slug
+                  )
+                }
+
+                role="link"
+                tabIndex={0}
               >
 
                 <span>
@@ -494,6 +529,14 @@ export default function EditorialHome() {
 
                 <Link
                   to={`/packages/${p.slug}`}
+
+                  /*
+                   * Prevent the row click
+                   * from firing twice.
+                   */
+                  onClick={(event) =>
+                    event.stopPropagation()
+                  }
                 >
                   View collection
                   <b>→</b>

@@ -1,4 +1,22 @@
-import { supabase } from '../lib/supabase';
+let supabasePromise;
+
+async function getSupabase() {
+  if (!supabasePromise) {
+    supabasePromise = import('../lib/supabase').then(
+      ({ supabase }) => supabase
+    );
+  }
+
+  const supabase = await supabasePromise;
+
+  if (!supabase) {
+    throw new Error(
+      'Supabase is not configured.'
+    );
+  }
+
+  return supabase;
+}
 
 const bucket = 'gallery-images';
 
@@ -21,83 +39,81 @@ export const categories = [
 ========================================================= */
 
 async function compressImage(file) {
-  // Small images don't need compression
-  if (file.size < 500 * 1024) {
-    return file;
-  }
-
   const image = new Image();
   const objectUrl = URL.createObjectURL(file);
 
   try {
-    image.src = objectUrl;
+      image.src = objectUrl;
 
-    await new Promise((resolve, reject) => {
-      image.onload = resolve;
-      image.onerror = reject;
-    });
+      await new Promise((resolve, reject) => {
+          image.onload = resolve;
+          image.onerror = reject;
+      });
 
-    const MAX_WIDTH = 2400;
-    const MAX_HEIGHT = 2400;
+      const MAX_WIDTH = 2000;
+      const MAX_HEIGHT = 2000;
 
-    let width = image.naturalWidth;
-    let height = image.naturalHeight;
+      let width = image.naturalWidth;
+      let height = image.naturalHeight;
 
-    if (
-      width > MAX_WIDTH ||
-      height > MAX_HEIGHT
-    ) {
-      const ratio = Math.min(
-        MAX_WIDTH / width,
-        MAX_HEIGHT / height
-      );
+      if (
+          width > MAX_WIDTH ||
+          height > MAX_HEIGHT
+      ) {
+          const ratio = Math.min(
+              MAX_WIDTH / width,
+              MAX_HEIGHT / height
+          );
 
-      width = Math.round(width * ratio);
-      height = Math.round(height * ratio);
-    }
-
-    const canvas = document.createElement('canvas');
-
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d', {
-      alpha: false,
-    });
-
-    ctx.drawImage(
-      image,
-      0,
-      0,
-      width,
-      height
-    );
-
-    const blob = await new Promise((resolve) => {
-      canvas.toBlob(
-        resolve,
-        'image/webp',
-        0.84
-      );
-    });
-
-    if (!blob) {
-      return file;
-    }
-
-    const originalName = file.name
-      .replace(/\.[^/.]+$/, '');
-
-    return new File(
-      [blob],
-      `${originalName}.webp`,
-      {
-        type: 'image/webp',
-        lastModified: Date.now(),
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
       }
-    );
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d", {
+          alpha: false,
+      });
+
+      ctx.drawImage(
+          image,
+          0,
+          0,
+          width,
+          height
+      );
+
+      const blob = await new Promise((resolve) => {
+          canvas.toBlob(
+              resolve,
+              "image/webp",
+              0.82
+          );
+      });
+
+      if (!blob) {
+          throw new Error(
+              "Image compression failed."
+          );
+      }
+
+      const originalName = file.name
+          .replace(/\.[^/.]+$/, "");
+
+      return new File(
+          [blob],
+          `${originalName}.webp`,
+          {
+              type: "image/webp",
+              lastModified: Date.now(),
+          }
+      );
+
   } finally {
-    URL.revokeObjectURL(objectUrl);
+      URL.revokeObjectURL(objectUrl);
   }
 }
 
@@ -106,7 +122,11 @@ async function compressImage(file) {
    GET GALLERY
 ========================================================= */
 
-export async function getGallery(category = '') {
+export async function getGallery(
+  category = "",
+  limit = null
+) {
+  const supabase = await getSupabase();
   let query = supabase
     .from('gallery_images')
     .select(
@@ -141,6 +161,10 @@ export async function getGallery(category = '') {
       category.trim()
     );
   }
+  
+  if (limit) {
+    query = query.limit(limit);
+  }
 
   const {
     data,
@@ -167,44 +191,46 @@ export async function getGallery(category = '') {
     const storage =
       supabase.storage.from(bucket);
 
-    const thumb =
+      const thumb =
       storage.getPublicUrl(
-        image.storage_path,
-        {
-          transform: {
-            width: 500,
-            height: 650,
-            resize: 'cover',
-            quality: 70,
-          },
-        }
+          image.storage_path,
+          {
+              transform: {
+                  width: 400,
+                  height: 550,
+                  resize: "cover",
+                  quality: 68,
+              },
+          }
+      );
+  
+  const medium =
+      storage.getPublicUrl(
+          image.storage_path,
+          {
+              transform: {
+                  width: 800,
+                  height: 1000,
+                  resize: "cover",
+                  quality: 75,
+              },
+          }
+      );
+  
+  const large =
+      storage.getPublicUrl(
+          image.storage_path,
+          {
+              transform: {
+                  width: 1200,
+                  height: 1500,
+                  resize: "cover",
+                  quality: 80,
+              },
+          }
       );
 
-    const medium =
-      storage.getPublicUrl(
-        image.storage_path,
-        {
-          transform: {
-            width: 900,
-            height: 1100,
-            resize: 'cover',
-            quality: 78,
-          },
-        }
-      );
-
-    const large =
-      storage.getPublicUrl(
-        image.storage_path,
-        {
-          transform: {
-            width: 1400,
-            height: 1600,
-            resize: 'cover',
-            quality: 82,
-          },
-        }
-      );
+   
 
     return {
       ...image,
@@ -227,6 +253,8 @@ export async function getGallery(category = '') {
 ========================================================= */
 
 export async function getAllGallery() {
+  const supabase = await getSupabase();
+
   const {
     data,
     error,
@@ -256,6 +284,8 @@ export async function uploadGalleryImage({
   category,
   display_order = 0,
 }) {
+  const supabase = await getSupabase();
+
   if (!file) {
     throw new Error(
       'No image selected.'
@@ -267,92 +297,8 @@ export async function uploadGalleryImage({
       'Please select a category.'
     );
   }
-
-  /*
-   * Compress before upload.
-   */
-  const optimizedFile =
-    await compressImage(file);
-
-  /*
-   * Always store optimized image as WebP.
-   */
-  const storage_path =
-    `${crypto.randomUUID()}.webp`;
-
-  /*
-   * Upload image.
-   */
-  const {
-    error: uploadError,
-  } = await supabase.storage
-    .from(bucket)
-    .upload(
-      storage_path,
-      optimizedFile,
-      {
-        cacheControl: '31536000',
-        contentType: 'image/webp',
-        upsert: false,
-      }
-    );
-
-  if (uploadError) {
-    throw uploadError;
-  }
-
-  /*
-   * Public URL.
-   */
-  const {
-    data: urlData,
-  } =
-    supabase.storage
-      .from(bucket)
-      .getPublicUrl(
-        storage_path
-      );
-
-  const image_url =
-    urlData.publicUrl;
-
-  /*
-   * Save database record.
-   */
-  const {
-    data,
-    error,
-  } = await supabase
-    .from('gallery_images')
-    .insert({
-      title: title?.trim() || '',
-      description:
-        description?.trim() || null,
-      category: category.trim(),
-      image_url,
-      storage_path,
-      display_order:
-        Number(display_order) || 0,
-      is_active: true,
-    })
-    .select()
-    .single();
-
-  /*
-   * Cleanup storage if DB insert fails.
-   */
-  if (error) {
-    await supabase.storage
-      .from(bucket)
-      .remove([
-        storage_path,
-      ]);
-
-    throw error;
-  }
-
-  return data;
 }
+  // rest of your existing code...
 
 
 /* =========================================================
@@ -363,6 +309,8 @@ export async function updateGalleryImage(
   id,
   values
 ) {
+  const supabase = await getSupabase();
+
   const {
     data,
     error,
@@ -388,9 +336,9 @@ export async function updateGalleryImage(
 export async function deleteGalleryImage(
   image
 ) {
-  /*
-   * Delete database record.
-   */
+  const supabase = await getSupabase();
+
+  // Delete database record.
   const {
     error,
   } = await supabase
@@ -402,9 +350,7 @@ export async function deleteGalleryImage(
     throw error;
   }
 
-  /*
-   * Delete storage file.
-   */
+  // Delete storage file.
   if (image.storage_path) {
     const {
       error: storageError,

@@ -1,0 +1,544 @@
+/* =========================================================
+   GREEN HILL STUDIO
+   COLLECTIONS PAGE
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap'
+);
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.collections-page {
+
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding:
+        70px
+        8.3%
+        100px;
+
+    background: #f7f5f0;
+
+    color: #292725;
+
+    font-family:
+        'DM Sans',
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.collections-hero {
+
+    padding:
+        55px
+        0
+        105px;
+}
+
+
+.collections-eyebrow {
+
+    margin: 0 0 24px;
+
+    color: #9a7340;
+
+    font-family:
+        'DM Sans',
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.collections-hero h1 {
+
+    margin: 0;
+
+    max-width: 900px;
+
+    color: #292725;
+
+    font-family:
+        'Cormorant Garamond',
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            75px,
+            7vw,
+            115px
+        );
+
+    font-weight: 400;
+
+    line-height: .84;
+
+    letter-spacing: -3px;
+}
+
+
+.collections-hero h1 i {
+
+    font-style: italic;
+
+    font-weight: 400;
+}
+
+
+.collections-intro {
+
+    max-width: 520px;
+
+    margin:
+        38px 0 0;
+
+    color: #806f5d;
+
+    font-family:
+        'Cormorant Garamond',
+        Georgia,
+        serif;
+
+    font-size: 23px;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   COLLECTION LIST
+========================================================= */
+
+.collections-list {
+
+    width: 100%;
+
+    border-top:
+        1px solid #d8d1c6;
+}
+
+
+/* =========================================================
+   COLLECTION ROW
+========================================================= */
+
+.collection-row {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        70px
+        minmax(280px, 1fr)
+        minmax(360px, 1.2fr)
+        50px;
+
+    align-items: center;
+
+    min-height: 135px;
+
+    padding:
+        25px 0;
+
+    box-sizing: border-box;
+
+    border-bottom:
+        1px solid #d8d1c6;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        background-color .25s ease,
+        padding-left .25s ease,
+        padding-right .25s ease;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.collection-row:hover {
+
+    background:
+        rgba(238, 233, 223, .5);
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+.collection-number {
+
+    align-self: start;
+
+    padding-top: 5px;
+
+    color: #a4814f;
+
+    font-family:
+        'DM Sans',
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.collection-row h2 {
+
+    margin: 0;
+
+    color: #263b4d;
+
+    font-family:
+        'Cormorant Garamond',
+        Georgia,
+        serif;
+
+    font-size: 43px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -.7px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.collection-row p {
+
+    max-width: 570px;
+
+    margin: 0;
+
+    color: #6f6255;
+
+    font-family:
+        'DM Sans',
+        sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.collection-arrow {
+
+    justify-self: end;
+
+    color: #171717;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    transition:
+        transform .25s ease,
+        color .25s ease;
+}
+
+
+.collection-row:hover
+.collection-arrow {
+
+    color: #9a7340;
+
+    transform:
+        translate(4px, -4px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .collections-page {
+
+        padding:
+            60px
+            6%
+            80px;
+    }
+
+
+    .collection-row {
+
+        grid-template-columns:
+            55px
+            minmax(220px, 1fr)
+            minmax(280px, 1fr)
+            40px;
+    }
+
+
+    .collection-row h2 {
+
+        font-size: 36px;
+    }
+
+
+    .collection-row p {
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .collections-page {
+
+        padding:
+            25px
+            18px
+            60px;
+
+        overflow-x: hidden;
+    }
+
+
+    /* -----------------------------------------
+       HERO
+    ----------------------------------------- */
+
+    .collections-hero {
+
+        padding:
+            35px
+            0
+            55px;
+    }
+
+
+    .collections-eyebrow {
+
+        margin-bottom: 18px;
+
+        font-size: 8px;
+
+        letter-spacing: 1.5px;
+    }
+
+
+    .collections-hero h1 {
+
+        font-size: 52px;
+
+        line-height: .9;
+
+        letter-spacing: -1.5px;
+    }
+
+
+    .collections-intro {
+
+        max-width: 310px;
+
+        margin-top: 22px;
+
+        font-size: 18px;
+
+        line-height: 1.2;
+    }
+
+
+    /* -----------------------------------------
+       ROW
+    ----------------------------------------- */
+
+    .collection-row {
+
+        display: grid;
+
+        grid-template-columns:
+            28px 1fr 25px;
+
+        grid-template-rows:
+            auto auto;
+
+        column-gap: 8px;
+
+        row-gap: 8px;
+
+        min-height: 0;
+
+        padding:
+            23px 0;
+    }
+
+
+    .collection-row:hover {
+
+        padding-left: 0;
+
+        padding-right: 0;
+
+        background: transparent;
+    }
+
+
+    /* -----------------------------------------
+       NUMBER
+    ----------------------------------------- */
+
+    .collection-number {
+
+        grid-column: 1;
+
+        grid-row: 1;
+
+        padding-top: 4px;
+
+        font-size: 8px;
+    }
+
+
+    /* -----------------------------------------
+       NAME
+    ----------------------------------------- */
+
+    .collection-row h2 {
+
+        grid-column: 2;
+
+        grid-row: 1;
+
+        margin: 0;
+
+        font-size: 28px;
+
+        line-height: 1;
+
+        letter-spacing: -.4px;
+    }
+
+
+    /* -----------------------------------------
+       DESCRIPTION
+    ----------------------------------------- */
+
+    .collection-row p {
+
+        grid-column: 2;
+
+        grid-row: 2;
+
+        max-width: 280px;
+
+        margin: 0;
+
+        font-size: 10px;
+
+        line-height: 1.45;
+    }
+
+
+    /* -----------------------------------------
+       ARROW
+    ----------------------------------------- */
+
+    .collection-arrow {
+
+        grid-column: 3;
+
+        grid-row: 1;
+
+        justify-self: end;
+
+        align-self: center;
+
+        font-size: 18px;
+    }
+
+
+    .collection-row:active
+    .collection-arrow {
+
+        transform:
+            translate(2px, -2px);
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .collections-page {
+
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+
+    .collections-hero h1 {
+
+        font-size: 47px;
+    }
+
+
+    .collection-row h2 {
+
+        font-size: 26px;
+    }
+
+
+    .collection-row p {
+
+        font-size: 9px;
+    }
+
+}

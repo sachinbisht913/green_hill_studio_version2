@@ -148,7 +148,7 @@ export default function PublicNav({ overHero = false }) {
 
         {/* COLLECTIONS */}
         <NavLink
-          to="/packages"
+          to="/collections"
           onClick={close}
         >
           Collections

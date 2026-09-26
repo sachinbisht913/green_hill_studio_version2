@@ -594,3 +594,47 @@
         animation: none;
     }
 }
+
+/* =========================================================
+   PUBLIC NAVBAR - MOBILE TOUCH FIX
+========================================================= */
+
+@media (max-width: 880px) {
+
+    .public-menu {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        outline: none;
+    }
+
+    .public-menu:focus,
+    .public-menu:active {
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .public-brand,
+    .public-brand img,
+    .public-brand span {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .public-links a,
+    .nav-home-button,
+    .nav-admin {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .public-links a:focus,
+    .nav-home-button:focus,
+    .nav-admin:focus {
+        outline: none;
+    }
+
+}

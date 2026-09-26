@@ -1,22 +1,22 @@
 import React, {
   useEffect,
   useState,
-} from 'react';
+} from "react";
 
 import {
   categories,
   getGallery,
-} from '../services/gallery';
+} from "../services/gallery";
 
 import {
   isSupabaseConfigured,
-} from '../lib/supabase';
+} from "../lib/supabase";
 
 import {
   fallbackGallery,
-} from '../data';
+} from "../data";
 
-import PublicNav from './PublicNav';
+import PublicNav from "./PublicNav";
 
 
 /* =========================================================
@@ -24,63 +24,107 @@ import PublicNav from './PublicNav';
 ========================================================= */
 
 function createFallbackGallery() {
+
   return fallbackGallery.map(
     ([category, image_url], index) => ({
+
       id: `fallback-${index}`,
+
       category,
+
       image_url,
+
       title: category,
+
     })
   );
+
 }
 
 
 /* =========================================================
-   GALLERY GRID
+   GALLERY
 ========================================================= */
 
 export default function Gallery({
-  category = '',
+
+  category = "",
+
   limit,
+
 }) {
-  const [items, setItems] =
-    useState([]);
+
+  const [items, setItems] = useState([]);
 
   const [loading, setLoading] =
     useState(isSupabaseConfigured);
 
 
   useEffect(() => {
+
     let cancelled = false;
+
 
     async function loadGallery() {
 
-      /* -----------------------------------------
+      /* =========================================
          SUPABASE NOT CONFIGURED
-      ----------------------------------------- */
+      ========================================= */
 
       if (!isSupabaseConfigured) {
+
+        const fallback =
+          createFallbackGallery();
+
+
+        /*
+         * IMPORTANT:
+         * Filter fallback images too.
+         */
+
+        const filtered =
+          category
+            ? fallback.filter(
+                (item) =>
+                  item.category
+                    ?.trim()
+                    .toLowerCase() ===
+                  category
+                    .trim()
+                    .toLowerCase()
+              )
+            : fallback;
+
+
         if (!cancelled) {
-          setItems(
-            createFallbackGallery()
-          );
+
+          setItems(filtered);
 
           setLoading(false);
+
         }
 
         return;
+
       }
 
 
-      /* -----------------------------------------
+      /* =========================================
          LOAD FROM SUPABASE
-      ----------------------------------------- */
+      ========================================= */
 
       setLoading(true);
 
+
       try {
+
+        /*
+         * getGallery(category) should return
+         * only the selected category.
+         */
+
         const data =
-          await getGallery(category);
+  await getGallery(category, limit);
 
 
         if (cancelled) {
@@ -89,46 +133,81 @@ export default function Gallery({
 
 
         /*
-         * IMPORTANT:
+         * Extra frontend filtering.
          *
-         * DO NOT use:
-         *
-         * data.length
-         *   ? data
-         *   : createFallbackGallery()
-         *
-         * because an empty result for Birthday,
-         * Party, etc. is a valid result.
+         * This protects us if getGallery()
+         * returns more records than expected.
          */
 
-        setItems(data);
+        const filtered =
+          category
+            ? data.filter(
+                (item) =>
+                  item.category
+                    ?.trim()
+                    .toLowerCase() ===
+                  category
+                    .trim()
+                    .toLowerCase()
+              )
+            : data;
 
 
-      } catch (error) {
+        setItems(filtered);
+
+      }
+
+      catch (error) {
 
         console.error(
-          'Gallery loading failed:',
+          "Gallery loading failed:",
           error
         );
 
 
         /*
-         * Fallback only when Supabase
-         * request actually fails.
+         * IMPORTANT:
+         *
+         * If a category was selected,
+         * DON'T show unrelated fallback images.
          */
-        if (!cancelled) {
-          setItems(
-            createFallbackGallery()
-          );
-        }
-
-      } finally {
 
         if (!cancelled) {
-          setLoading(false);
+
+          const fallback =
+            createFallbackGallery();
+
+
+          const filtered =
+            category
+              ? fallback.filter(
+                  (item) =>
+                    item.category
+                      ?.trim()
+                      .toLowerCase() ===
+                    category
+                      .trim()
+                      .toLowerCase()
+                )
+              : fallback;
+
+
+          setItems(filtered);
+
         }
 
       }
+
+      finally {
+
+        if (!cancelled) {
+
+          setLoading(false);
+
+        }
+
+      }
+
     }
 
 
@@ -136,65 +215,77 @@ export default function Gallery({
 
 
     return () => {
+
       cancelled = true;
+
     };
 
   }, [category]);
 
 
-  /* -----------------------------------------
-     LIMIT RESULTS
-  ----------------------------------------- */
+  /* =========================================
+     LIMIT
+  ========================================= */
 
   const shown = limit
     ? items.slice(0, limit)
     : items;
 
 
-  /* -----------------------------------------
+  /* =========================================
      LOADING
-  ----------------------------------------- */
+  ========================================= */
 
   if (loading) {
     return (
-      <div className="gallery-loading">
-        <div className="gallery-spinner" />
-
-        <span>
-          Loading photographs…
-        </span>
+      <div className="gallery-grid gallery-skeleton-grid">
+        {Array.from({ length: limit || 6 }).map((_, index) => (
+          <div
+            className="gallery-skeleton"
+            key={index}
+          />
+        ))}
       </div>
     );
   }
 
 
-  /* -----------------------------------------
+  /* =========================================
      EMPTY CATEGORY
-  ----------------------------------------- */
+  ========================================= */
 
   if (!shown.length) {
+
     return (
+
       <div className="gallery-empty">
 
+        <div className="gallery-empty-icon">
+          ✦
+        </div>
+
         <h3>
-          No photographs found
+          No {category || "photographs"} yet
         </h3>
 
         <p>
-          There are no photographs in this
-          category yet.
+          We haven't added photographs to
+          this collection yet.
         </p>
 
       </div>
+
     );
+
   }
 
 
-  /* -----------------------------------------
-     GALLERY
-  ----------------------------------------- */
+  /* =========================================
+     GALLERY GRID
+  ========================================= */
 
   return (
+
     <div className="gallery-grid">
 
       {shown.map(
@@ -205,55 +296,38 @@ export default function Gallery({
             className="gallery-card"
           >
 
-            <img
-              src={
-                item.thumb_url ||
-                item.image_url
-              }
+<img
+  src={item.thumb_url || item.image_url}
+  srcSet={
+    item.thumb_url
+      ? `
+          ${item.thumb_url} 400w,
+          ${item.medium_url} 800w,
+          ${item.large_url} 1200w
+        `
+      : undefined
+  }
+  sizes="
+    (max-width: 600px) 92vw,
+    (max-width: 1000px) 45vw,
+    30vw
+  "
+  loading={index === 0 ? "eager" : "lazy"}
+  decoding="async"
+  fetchPriority={index === 0 ? "high" : "auto"}
+  width="900"
+  height="1100"
+  alt={
+    item.title ||
+    item.category ||
+    "Green Hill Studio photograph"
+  }
+  onLoad={(event) => {
+    event.currentTarget.classList.add("loaded");
+  }}
+  className="gallery-image"
 
-              srcSet={
-                item.thumb_url
-                  ? `
-                    ${item.thumb_url} 500w,
-                    ${item.medium_url} 900w,
-                    ${item.large_url} 1400w
-                  `
-                  : undefined
-              }
-
-              sizes="
-                (max-width: 600px) 92vw,
-                (max-width: 1000px) 45vw,
-                30vw
-              "
-
-              /*
-               * First two images load immediately.
-               * Rest are lazy loaded.
-               */
-              loading={
-                index < 2
-                  ? 'eager'
-                  : 'lazy'
-              }
-
-              decoding="async"
-
-              fetchPriority={
-                index < 2
-                  ? 'high'
-                  : 'auto'
-              }
-
-              width="900"
-              height="1100"
-
-              alt={
-                item.title ||
-                item.category ||
-                'Green Hill Studio photograph'
-              }
-            />
+/>
 
             <figcaption>
               {item.title ||
@@ -266,7 +340,9 @@ export default function Gallery({
       )}
 
     </div>
+
   );
+
 }
 
 
@@ -277,11 +353,13 @@ export default function Gallery({
 export function GalleryPage() {
 
   const [filter, setFilter] =
-    useState('');
+    useState("");
 
 
   return (
+
     <>
+
       <PublicNav />
 
 
@@ -298,9 +376,11 @@ export function GalleryPage() {
 
 
         <h1>
+
           {filter
             ? `${filter} Stories`
-            : 'Wedding Stories'}
+            : "Wedding Stories"}
+
         </h1>
 
 
@@ -318,12 +398,12 @@ export function GalleryPage() {
 
             className={
               !filter
-                ? 'active'
-                : ''
+                ? "active"
+                : ""
             }
 
             onClick={() =>
-              setFilter('')
+              setFilter("")
             }
           >
             All
@@ -342,15 +422,17 @@ export function GalleryPage() {
 
                 className={
                   filter === category
-                    ? 'active'
-                    : ''
+                    ? "active"
+                    : ""
                 }
 
                 onClick={() =>
                   setFilter(category)
                 }
               >
+
                 {category}
+
               </button>
 
             )
@@ -369,6 +451,9 @@ export function GalleryPage() {
 
 
       </main>
+
     </>
+
   );
+
 }

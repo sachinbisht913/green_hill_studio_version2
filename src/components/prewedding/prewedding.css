@@ -688,3 +688,135 @@
     }
 
 }
+
+/* =========================================================
+   PRE-WEDDING - MOBILE FINAL POLISH
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .pre-wedding-page {
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-bottom: 50px;
+        overflow-x: hidden;
+    }
+
+    /* Hero */
+    .pre-wedding-hero {
+        padding-top: 25px;
+        padding-bottom: 40px;
+        margin-top: 45px;
+    }
+
+    .pre-wedding-eyebrow {
+        font-size: 8px;
+        letter-spacing: 1.4px;
+        margin-bottom: 18px;
+    }
+
+    .pre-wedding-hero h1 {
+        font-size: 52px;
+        line-height: .9;
+        letter-spacing: -1.2px;
+    }
+
+    .pre-wedding-intro {
+        font-size: 18px;
+        line-height: 1.2;
+        margin-top: 22px;
+        max-width: 310px;
+    }
+
+    /* Package */
+    .pre-wedding-package {
+        grid-template-columns: 32px 1fr;
+        padding: 25px 0;
+        row-gap: 14px;
+    }
+
+    .package-number {
+        font-size: 10px;
+        padding-top: 4px;
+    }
+
+    .package-info h2 {
+        font-size: 29px;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .package-info p {
+        font-size: 11px;
+        line-height: 1.45;
+        max-width: 250px;
+    }
+
+    /* Price */
+    .package-price {
+        font-size: 21px;
+        margin-top: 2px;
+    }
+
+    /* Items */
+    .package-items {
+        gap: 5px;
+    }
+
+    .package-items span {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .package-items b {
+        width: 15px;
+        font-size: 9px;
+    }
+
+    /* Explore button */
+    .package-link {
+        font-size: 8px;
+        letter-spacing: .08em;
+        padding: 8px 0;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        user-select: none;
+    }
+
+    .package-link span {
+        font-size: 10px;
+    }
+
+    /* Featured package */
+    .pre-wedding-package.featured-package {
+        padding: 25px 15px;
+    }
+
+    .pre-wedding-package.featured-package::before {
+        padding: 5px 8px;
+        font-size: 7px;
+    }
+
+    /* Prevent accidental text selection on clickable package */
+    .package-link {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+
+    .pre-wedding-hero h1 {
+        font-size: 47px;
+    }
+
+    .package-info h2 {
+        font-size: 27px;
+    }
+
+    .pre-wedding-intro {
+        font-size: 17px;
+    }
+
+}
